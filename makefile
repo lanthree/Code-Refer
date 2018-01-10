@@ -1,16 +1,13 @@
-ANLIB  = ranlib
-AR     = ar
-AROPT  = -crv
-C11    = g++ -std=gnu++11
+include ./Inc.mk
 
-all: clean libthread_pool.a main
+all:
+	[ -d "$(WORKHOME)/libs" ] || mkdir  "$(WORKHOME)/libs"
+	make -C src
 
-main: main.cpp
-	$(C11) -o $@ $^ -I./ -L./ -lthread_pool -pthread
-
-libthread_pool.a: thread_pool.cpp thread_pool.h
-	$(C11) -c $<
-	$(AR) $(AROPT) $@ thread_pool.o
+test:
+	make -C tests
 
 clean:
-	rm -f main libthread_pool.a thread_pool.o
+	rm -f ./libs/*.a
+	make clean -C src
+	make clean -C tests
