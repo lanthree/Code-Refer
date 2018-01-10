@@ -1,5 +1,5 @@
-#ifndef THREAD_POOL_H_
-#define THREAD_POOL_H_
+#ifndef __THREAD_POOL_H__
+#define __THREAD_POOL_H__
 
 #include <thread>
 #include <mutex>
