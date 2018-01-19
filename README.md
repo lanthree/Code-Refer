@@ -3,4 +3,4 @@
 + log
 	- 日志工具 [working]
 + utils
-	- 工具性函数 [working]
+	- 工具函数 [working]

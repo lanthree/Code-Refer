@@ -23,7 +23,7 @@ void func2(int num)
 
 int main()
 {
-	ThreadPool pool1(10);
+	lan_tools::ThreadPool pool1(10);
 	pool1.start();
 	int cnt = 0;
 	while (++cnt <= 100000) {
@@ -33,7 +33,7 @@ int main()
 	cout << counter1 << endl;
 
 
-	ThreadPool pool2(10);
+	lan_tools::ThreadPool pool2(10);
 	pool2.start();
 	cnt = 0;
 	while (++cnt <= 1000) {

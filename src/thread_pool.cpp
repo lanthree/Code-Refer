@@ -1,5 +1,7 @@
 #include "thread_pool.h"
 
+using namespace lan_tools;
+
 ThreadPool::ThreadPool(int threadNumber)
 	:threadNumber_(threadNumber),
 	 running_(true),

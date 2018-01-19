@@ -8,6 +8,8 @@
 #include <vector>
 #include <functional>
 
+namespace lan_tools{
+
 class ThreadPool
 {
 public:
@@ -40,5 +42,7 @@ private:
 	std::condition_variable_any sleep_until_;              //当任务队列为空时的条件变量 等待被叫醒
 	std::vector<std::shared_ptr<std::thread>> threads_;    //用来保存线程对象指针
 };
+
+}
 
 #endif
