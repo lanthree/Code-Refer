@@ -42,18 +42,18 @@ struct LogFile {
 class Log
 {
 public:
-	Log(const std::string& pathname, long long maxsize_eachfile); // MB
+	Log(const std::string& pathname, size_t maxsize_eachfile); // MB
 	~Log();
 
 	int print(const std::string& file, int line, LOG_LEVEL level,
 		const char *fmt, ...);
 
 private:
-	int roll_file();
+	void roll_file();
 
 private:
 	std::string pathname_;
-	long long maxsize_eachfile_;
+	size_t maxsize_eachfile_;
 
 	static std::mutex mutex_;
 	static std::map<std::string, std::shared_ptr<LogFile>> pathname_2_logfile_;

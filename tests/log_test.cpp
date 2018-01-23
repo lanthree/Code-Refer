@@ -3,9 +3,10 @@
 
 int main()
 {
-	for (int i = 0; i < 100; ++i)
-		DEBUG("%d", i);
+	int cnt = 0;
+	while (cnt < 20) {
+		DEBUG("++++++++++++++%d", cnt++);
+		ERROR("--------------%d", cnt++);
+	}
 
-	for (int i = 0; i < 100; ++i)
-		ERROR("%d", i);
 }
