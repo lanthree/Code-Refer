@@ -4,16 +4,19 @@
 #include <string>
 #include <mutex>
 #include <map>
+#include <sstream>
+#include <fstream>
+#include <memory>
 
 #define DEBUG(fmt, ...)\
 do {\
-	lan_tools::sys_log.print(__FILE__, __LINE__, lan_tools::LOG_LEVEL::DEBUG, fmt, ##__VA_ARGS__);\
+	lan_tools::get_syslog().print(__FILE__, __LINE__, lan_tools::LOG_LEVEL::DEBUG, fmt, ##__VA_ARGS__);\
 } while(0)
 
 
 #define ERROR(fmt, ...)\
 do {\
-	lan_tools::sys_log.print(__FILE__, __LINE__, lan_tools::LOG_LEVEL::ERROR, fmt, ##__VA_ARGS__);\
+	lan_tools::get_syslog().print(__FILE__, __LINE__, lan_tools::LOG_LEVEL::ERROR, fmt, ##__VA_ARGS__);\
 } while(0)
 
 namespace lan_tools {
@@ -22,36 +25,41 @@ enum class LOG_LEVEL {
 	ERROR, WARN, INFO, DEBUG
 };
 
-// You should not init Log obj in thread.
+struct LogFile {
 
-struct LogFile{
+	LogFile();
 
-	LogFile(int fd_);
+	std::string get_fileappend();
 
-	int fd_;
+	std::fstream fs_;
 	std::mutex mutex_;
 
-	std::string last_write_yymmdd;
+	std::string last_write_Ymd;
 	int cut_cnt;
 };
 
+// You should not init Log obj in thread.
 class Log
 {
 public:
 	Log(const std::string& pathname, long long maxsize_eachfile); // MB
 	~Log();
 
-	print(const std::string& file, int line, LOG_LEVEL level,
+	int print(const std::string& file, int line, LOG_LEVEL level,
 		const char *fmt, ...);
+
+private:
+	int roll_file();
 
 private:
 	std::string pathname_;
 	long long maxsize_eachfile_;
 
-	static std::map<std::string, LogFile> pathname_2_logfile_;
+	static std::mutex mutex_;
+	static std::map<std::string, std::shared_ptr<LogFile>> pathname_2_logfile_;
 };
 
-static Log sys_log("../log/sys.log", 4);
+Log& get_syslog();
 
 }
 

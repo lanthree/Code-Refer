@@ -4,8 +4,11 @@
 #include <string>
 
 namespace lan_tools {
+namespace utils {
 
-	std::string get_yyyymmdd();
+	std::string get_Ymd();
+	std::string get_YmdHMS();
+}
 }
 
 #endif
